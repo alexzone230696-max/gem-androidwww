@@ -1,4 +1,4 @@
-name: Android Tests
+name: Android Build & Tests
 
 on:
   push:
@@ -13,8 +13,8 @@ env:
   UNIT_TESTS: "true"
 
 jobs:
-  unit_test:
-    name: Build and Test
+  build_and_test:
+    name: Build, Test & Artifact
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +47,8 @@ jobs:
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Build tests
-        run: just build-test
+      - name: Build APK
+        run: just build
         env:
           GPR_USERNAME: ${{ github.actor }}
           GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,3 +59,9 @@ jobs:
           api-level: 29
           arch: x86_64
           script: just test
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: app/build/outputs/apk/release/*.apk
