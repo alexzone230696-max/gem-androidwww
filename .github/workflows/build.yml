@@ -1,20 +1,11 @@
 name: Android CI
 
-# Возможность запуска вручную и на push/pull_request
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:  # <-- вот это даёт кнопку Run workflow в Actions
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      USERNAME: ${{ secrets.USERNAME }}
-      TOKEN: ${{ secrets.TOKEN }}
 
     steps:
       - name: Checkout repository
